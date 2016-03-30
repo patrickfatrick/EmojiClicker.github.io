@@ -20,25 +20,30 @@ var babies = 0;
 var launched = 0;
 //Set babyspeed
 var babyspeed = 0;
+// Set 
 
 //Check storage
 function init() {
   if(!store.enabled) {
     alert('Your browser does not support storage, if you would like to keep your game saves please turn off private mode or get a modern browser');
-    return;
   }
+  launched = 0;
+  launch();
 }
+
+window.onload = init;
 
 //First laucnh
 function launch() {
   if(launched == 0){
-    store.set('launch', 0)
-    var likesl = store.get('likesl')
+    store.set('launch', 1)
+    var likes = store.get('likesl')
     if(likesl >= 1) {
       gload();
     } else {
       store.set('likesl', 0)
       store.set('babiesl', 0)
+      store.set('babyspeedl', 0)
     }
     store.set('launch', 1)
     gload();
@@ -46,9 +51,6 @@ function launch() {
     gload();
   }
 }
-init();
-launched = 0;
-launch();
 
 //Auto Save function.
 function agsave(){
@@ -56,7 +58,6 @@ function agsave(){
   store.set('babiesl', babies);
   store.set('cpsl', cps);
   store.set('nextCostbl', nextCostb);
-  ga('send', 'event', EmojiClicker, autosave);
 }
 
 //Save function
@@ -65,7 +66,7 @@ function gsave(){
   store.set('babiesl', babies);
   store.set('cpsl', cps);
   store.set('nextCostbl', nextCostb);
-  ga('send', 'event', EmojiClicker, usersave);
+  store.set('babyspeedl', babyspeed);
 }
 
 //Load function
@@ -73,20 +74,26 @@ function gload(){
   likes = store.get('likesl')
   babies = store.get('babiesl')
   cps = store.get('cpsl')
-  nextCostb = store.get('nextCostlb')
+  var nextCostb = store.get('nextCostlb')
+  babyspeed = store.get('babyspeedl')
   refStats()
 }
 
 //Reset function
 function greset(){
-  store.clear();
+  store.set('likesl', 0);
+  store.set('babiesl', 0);
+  store.set('cpsl', 0);
+  store.set('nextCostbl', 0);
+  store.set('babyspeedl', 0);
   gload();
-  location.reload();
+  refStats();
+//  location.reload();
 }
 
 //Refresh Stats
 function refStats() {
-    setTimeout(function(){ document.getElementById("count").innerHTML = likes;document.getElementById('babies').innerHTML = babies;document.getElementById('cps').innerHTML = cps;document.getElementById('count').innerHTML = likes;document.getElementById('cps').innerHTML = cps; }, 1500);
+    setTimeout(function(){ document.getElementById("count").innerHTML = likes;document.getElementById('babies').innerHTML = babies;document.getElementById('count').innerHTML = likes;document.getElementById('cps').innerHTML = cps; }, 250);
 }
 
 gload()
@@ -102,19 +109,21 @@ function buyBaby(){ //define function
   var babyCost = Math.floor(10 * Math.pow(1.2, babies)); //Works out cost of the baby
   if(likes >= babyCost){ //can the player afford it?
     babies = babies + 1; //increases number of babies
-    babyspeed = babyspeed + 0.5;
+    // This will be used when upgrades come in babyspeed = babyspeed + ;
     likes = likes - babyCost; //takes away like cost of baby.
-    var cps = cps + 1;
     document.getElementById('babies').innerHTML = babies;
     document.getElementById('count').innerHTML = likes;
-    document.getElementById('cps').innerHTML = cps;
   };
   var nextCostb = Math.floor(10 * Math.pow(1.2, babies));
   document.getElementById('babycost').innerHTML = nextCostb;
+  var babycps = 1 * babymodifier;
+  cps = cps + babycps;
+  document.getElementById('cps').innerHTML = cps;
+  refStats();
 }
 
 window.setInterval(function(){
-  clickEmoji(babyspeed);
+  clickEmoji(babies * 0.5);
 }, 1000);
 
 window.setInterval(function(){
