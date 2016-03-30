@@ -20,7 +20,8 @@ var babies = 0;
 var launched = 0;
 //Set babyspeed
 var babyspeed = 0;
-// Set 
+// Set babymodifier (for upgrades)
+var babymodifier = 0.5;
 
 //Check storage
 function init() {
@@ -123,7 +124,7 @@ function buyBaby(){ //define function
 }
 
 window.setInterval(function(){
-  clickEmoji(babies * 0.5);
+  clickEmoji(babycps);
 }, 1000);
 
 window.setInterval(function(){
