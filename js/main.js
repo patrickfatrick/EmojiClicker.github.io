@@ -19,7 +19,7 @@ var babies = 0;
 //Launched variable
 var launched = 0;
 //Set babyspeed
-var babycps = 1;
+var babycps = 0;
 // Set babymodifier (for upgrades)
 var babymodifier = 0.5;
 
@@ -77,13 +77,13 @@ function gsave(){
 
 //Load function
 function gload(){
-  likes = store.get('likesl')
-  babies = store.get('babiesl')
-  cps = store.get('cpsl')
-  var nextCostb = store.get('nextCostlb')
-  babycps = store.get('babycps')
-  babymodifier = store.get('babymodifierl')
-  refStats()
+  likes = parseFloat("store.get('likesl')");
+  babies = parseFloat("store.get('babiesl')");
+  cps = parseFloat("store.get('cpsl')");
+  var nextCostb = parseFloat("store.get('nextCostlb')");
+  babycps = parseFloat("store.get('babycps')");
+  babymodifier = parseFloat("store.get('babymodifierl')");
+  refStats();
 }
 
 //Reset function
@@ -93,6 +93,7 @@ function greset(){
   store.set('cpsl', 0);
   store.set('nextCostbl', 0);
   store.set('babycps', 0);
+  store.set('launch', 0)
   gload();
   refStats();
 //  location.reload();
@@ -102,8 +103,6 @@ function greset(){
 function refStats() {
     setTimeout(function(){ document.getElementById("count").innerHTML = likes;document.getElementById('babies').innerHTML = babies;document.getElementById('count').innerHTML = likes;document.getElementById('cps').innerHTML = cps; }, 250);
 }
-
-gload()
 
 //clickEmoji function
 function clickEmoji(number){ //define function
