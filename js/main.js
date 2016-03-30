@@ -40,6 +40,7 @@ function launch() {
   if(launched == 0){
     store.set('launch', 1)
     var likes = store.get('likesl')
+    var likesl = store.get('likesl')
     if(likesl >= 1) {
       gload();
     } else {
