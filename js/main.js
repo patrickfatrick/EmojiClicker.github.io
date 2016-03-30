@@ -19,9 +19,10 @@ var babies = 0;
 //Launched variable
 var launched = 0;
 //Set babyspeed
-var babyspeed = 0;
+var babycps = 1;
 // Set babymodifier (for upgrades)
 var babymodifier = 0.5;
+
 
 //Check storage
 function init() {
@@ -44,7 +45,7 @@ function launch() {
     } else {
       store.set('likesl', 0)
       store.set('babiesl', 0)
-      store.set('babyspeedl', 0)
+      store.set('babycps', 1)
     }
     store.set('launch', 1)
     gload();
@@ -59,6 +60,8 @@ function agsave(){
   store.set('babiesl', babies);
   store.set('cpsl', cps);
   store.set('nextCostbl', nextCostb);
+  store.set('babycpsl', babycps);
+  store.set('babymodifierl', babymodifier)
 }
 
 //Save function
@@ -67,7 +70,8 @@ function gsave(){
   store.set('babiesl', babies);
   store.set('cpsl', cps);
   store.set('nextCostbl', nextCostb);
-  store.set('babyspeedl', babyspeed);
+  store.set('babycpsl', babycps);
+  store.set('babymodifierl', babymodifier)
 }
 
 //Load function
@@ -76,7 +80,8 @@ function gload(){
   babies = store.get('babiesl')
   cps = store.get('cpsl')
   var nextCostb = store.get('nextCostlb')
-  babyspeed = store.get('babyspeedl')
+  babycps = store.get('babycps')
+  babymodifier = store.get('babymodifierl')
   refStats()
 }
 
@@ -86,7 +91,7 @@ function greset(){
   store.set('babiesl', 0);
   store.set('cpsl', 0);
   store.set('nextCostbl', 0);
-  store.set('babyspeedl', 0);
+  store.set('babycps', 1);
   gload();
   refStats();
 //  location.reload();
@@ -110,7 +115,6 @@ function buyBaby(){ //define function
   var babyCost = Math.floor(10 * Math.pow(1.2, babies)); //Works out cost of the baby
   if(likes >= babyCost){ //can the player afford it?
     babies = babies + 1; //increases number of babies
-    // This will be used when upgrades come in babyspeed = babyspeed + ;
     likes = likes - babyCost; //takes away like cost of baby.
     document.getElementById('babies').innerHTML = babies;
     document.getElementById('count').innerHTML = likes;
