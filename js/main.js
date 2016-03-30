@@ -92,7 +92,7 @@ function greset(){
   store.set('babiesl', 0);
   store.set('cpsl', 0);
   store.set('nextCostbl', 0);
-  store.set('babycps', 1);
+  store.set('babycps', 0);
   gload();
   refStats();
 //  location.reload();
@@ -117,15 +117,15 @@ function buyBaby(){ //define function
   if(likes >= babyCost){ //can the player afford it?
     babies = babies + 1; //increases number of babies
     likes = likes - babyCost; //takes away like cost of baby.
+    babycps = 1 * babymodifier;
+    cps = cps + babycps;
     document.getElementById('babies').innerHTML = babies;
     document.getElementById('count').innerHTML = likes;
-  };
+    document.getElementById('cps').innerHTML = cps;
+    refStats();
+  }
   var nextCostb = Math.floor(10 * Math.pow(1.2, babies));
   document.getElementById('babycost').innerHTML = nextCostb;
-  var babycps = 1 * babymodifier;
-  cps = cps + babycps;
-  document.getElementById('cps').innerHTML = cps;
-  refStats();
 }
 
 window.setInterval(function(){
