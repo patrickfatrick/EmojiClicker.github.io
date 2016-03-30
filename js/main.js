@@ -23,6 +23,8 @@ var babycps = 0;
 // Set babymodifier (for upgrades)
 var babymodifier = 0.5;
 
+var nextCostb
+
 
 //Check storage
 function init() {
@@ -44,9 +46,11 @@ function launch() {
     if(likesl >= 1) {
       gload();
     } else {
+      store.set('cpsl', 0)
       store.set('likesl', 0)
       store.set('babiesl', 0)
       store.set('babycps', 1)
+      store.set('babymodifierl', 0.5)
     }
     store.set('launch', 1)
     gload();
@@ -77,12 +81,12 @@ function gsave(){
 
 //Load function
 function gload(){
-  likes = parseFloat("store.get('likesl')");
-  babies = parseFloat("store.get('babiesl')");
-  cps = parseFloat("store.get('cpsl')");
-  var nextCostb = parseFloat("store.get('nextCostlb')");
-  babycps = parseFloat("store.get('babycps')");
-  babymodifier = parseFloat("store.get('babymodifierl')");
+  likes = parseFloat(store.get('likesl'));
+  babies = parseFloat(store.get('babiesl'));
+  cps = parseFloat(store.get('cpsl'));
+  nextCostb = parseFloat(store.get('nextCostlb'));
+  babycps = parseFloat(store.get('babycps'));
+  babymodifier = parseFloat(store.get('babymodifierl'));
   refStats();
 }
 
@@ -123,7 +127,7 @@ function buyBaby(){ //define function
     document.getElementById('cps').innerHTML = cps;
     refStats();
   }
-  var nextCostb = Math.floor(10 * Math.pow(1.2, babies));
+  nextCostb = Math.floor(10 * Math.pow(1.2, babies));
   document.getElementById('babycost').innerHTML = nextCostb;
 }
 
